@@ -1,4 +1,8 @@
-const getAllRestaurants = (req, res) => {
+const db = require('../database');
+
+const getAllRestaurants = async (req, res) => {
+  const results = await db.query('select * from restaurants');
+  console.log(results);
   res.status(200).json({
     message: 'These are the restaurants',
   });
