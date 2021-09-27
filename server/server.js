@@ -1,10 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 
 const routes = require('./routes/RestaurantRoutes');
 
 const app = express();
+
+app.use(cors());
 
 // logging dev
 app.use(morgan('dev'));
