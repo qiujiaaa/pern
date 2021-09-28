@@ -1,10 +1,12 @@
 import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import RestaurantsApi from '../../apis/RestaurantsApi';
 import { RestaurantsContext } from '../../context/RestaurantsContext';
 
 const List = () => {
   const { restaurants, setRestaurants } = useContext(RestaurantsContext);
+  let history = useHistory();
 
   useEffect(() => {
     try {
@@ -19,13 +21,23 @@ const List = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
     try {
       const response = await RestaurantsApi.delete(`/${id}`);
       setRestaurants(restaurants.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleEdit = async (e, id) => {
+    e.stopPropagation();
+    history.push(`/restaurants/update/${id}`);
+  };
+
+  const handleSelect = (id) => {
+    history.push(`/restaurants/${id}`);
   };
 
   return (
@@ -44,17 +56,22 @@ const List = () => {
         <tbody>
           {restaurants &&
             restaurants.map((item) => (
-              <tr key={item.id}>
+              <tr onClick={() => handleSelect(item.id)} key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.location}</td>
                 <td>{'$'.repeat(item.price_range)}</td>
                 <td>RATING</td>
                 <td>
-                  <button className="btn btn-warning">Update</button>
+                  <button
+                    onClick={(e) => handleEdit(e, item.id)}
+                    className="btn btn-warning"
+                  >
+                    Update
+                  </button>
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDelete(item.id)}
+                    onClick={(e) => handleDelete(e, item.id)}
                     className="btn btn-danger"
                   >
                     Delete

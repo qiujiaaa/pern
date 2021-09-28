@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
-import Restaurant from './components/Restaurant';
-import Update from './components/Update';
+import Restaurant from './components/Restaurant/Restaurant';
+import Update from './components/Update/Update';
 import { RestaurantContextProvider } from './context/RestaurantsContext';
 
 const App = () => {

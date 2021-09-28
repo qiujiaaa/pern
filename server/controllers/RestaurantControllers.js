@@ -21,7 +21,7 @@ const getRestaurant = async (req, res) => {
     res.status(200).json({
       status: 'success',
       results: result.rows.length,
-      data: { restaurants: result.rows },
+      data: { restaurant: result.rows[0] },
     });
   } catch (error) {
     console.log(error);
