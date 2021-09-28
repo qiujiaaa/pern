@@ -19,6 +19,15 @@ const List = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await RestaurantsApi.delete(`/${id}`);
+      setRestaurants(restaurants.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="list-group">
       <table className="table table-hover table-light table-striped align-middle">
@@ -44,7 +53,12 @@ const List = () => {
                   <button className="btn btn-warning">Update</button>
                 </td>
                 <td>
-                  <button className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
