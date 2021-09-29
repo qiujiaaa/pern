@@ -3,7 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
-const routes = require('./routes/RestaurantRoutes');
+const restaurantRoutes = require('./routes/RestaurantRoutes');
+const reviewRoutes = require('./routes/ReviewRoutes');
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const port = process.env.PORT || 5000;
 
-app.use('/api/v1/restaurants', routes);
+app.use('/api/v1/restaurants', restaurantRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
 
 app.listen(port, () => {
   console.log(`Server is up and listening on port ${port}.`);

@@ -23,12 +23,13 @@ const Form = (props) => {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await RestaurantsApi.put(`/${id}`, {
+      await RestaurantsApi.put(`/${id}`, {
         name,
         location,
         price_range: pricerange,

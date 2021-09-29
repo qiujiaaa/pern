@@ -24,7 +24,7 @@ const List = () => {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await RestaurantsApi.delete(`/${id}`);
+      await RestaurantsApi.delete(`/${id}`);
       setRestaurants(restaurants.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);

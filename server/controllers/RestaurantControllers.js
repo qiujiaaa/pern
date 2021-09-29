@@ -15,13 +15,21 @@ const getAllRestaurants = async (req, res) => {
 
 const getRestaurant = async (req, res) => {
   try {
-    const result = await db.query('select * from restaurants where id = $1', [
-      req.params.id,
-    ]);
+    const restaurant = await db.query(
+      'select * from restaurants where id = $1',
+      [req.params.id]
+    );
+    const reviews = await db.query(
+      'select * from reviews where restaurant_id = $1',
+      [req.params.id]
+    );
     res.status(200).json({
       status: 'success',
-      results: result.rows.length,
-      data: { restaurant: result.rows[0] },
+      results: restaurant.rows.length,
+      data: {
+        restaurant: restaurant.rows[0],
+        reviews: reviews.rows,
+      },
     });
   } catch (error) {
     console.log(error);
