@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import RestaurantsApi from '../../apis/RestaurantsApi';
 import { RestaurantsContext } from '../../context/RestaurantsContext';
+import Ratings from '../Ratings';
 
 const List = () => {
   const { restaurants, setRestaurants } = useContext(RestaurantsContext);
@@ -29,6 +30,21 @@ const List = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const renderRating = (item) => {
+    return (
+      <>
+        {item.count ? (
+          <>
+            <Ratings rating={item.avg} />
+            <span className="text-warning ml-1">{`(${item.count})`}</span>
+          </>
+        ) : (
+          <span className="text-danger ml-1">No ratings yet.</span>
+        )}
+      </>
+    );
   };
 
   const handleEdit = async (e, id) => {
@@ -60,7 +76,7 @@ const List = () => {
                 <td>{item.name}</td>
                 <td>{item.location}</td>
                 <td>{'$'.repeat(item.price_range)}</td>
-                <td>RATING</td>
+                <td>{renderRating(item)}</td>
                 <td>
                   <button
                     onClick={(e) => handleEdit(e, item.id)}

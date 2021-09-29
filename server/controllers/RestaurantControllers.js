@@ -2,7 +2,9 @@ const db = require('../database');
 
 const getAllRestaurants = async (req, res) => {
   try {
-    const results = await db.query('select * from restaurants');
+    const results = await db.query(
+      'select * from restaurants natural left join (select restaurant_id as id, count(*), trunc(avg(rating), 1) as avg from reviews group by restaurant_id) reviews'
+    );
     res.status(200).json({
       status: 'success',
       results: results.rows.length,
@@ -16,7 +18,7 @@ const getAllRestaurants = async (req, res) => {
 const getRestaurant = async (req, res) => {
   try {
     const restaurant = await db.query(
-      'select * from restaurants where id = $1',
+      'select * from restaurants natural left join (select restaurant_id as id, count(*), trunc(avg(rating), 1) as avg from reviews group by restaurant_id) reviews where id = $1',
       [req.params.id]
     );
     const reviews = await db.query(

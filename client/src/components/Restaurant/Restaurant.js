@@ -24,6 +24,21 @@ const Restaurant = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const renderRating = (item) => {
+    return (
+      <>
+        {item.count ? (
+          <>
+            <Ratings rating={item.avg} />
+            <span className="text-warning ml-1">{`(${item.count})`}</span>
+          </>
+        ) : (
+          <span className="text-danger ml-1">No ratings yet.</span>
+        )}
+      </>
+    );
+  };
+
   return (
     <div>
       {selectedRestaurant && (
@@ -33,9 +48,13 @@ const Restaurant = () => {
               <h1 className="font-weight-light display-1 text-center">
                 {selectedRestaurant.restaurant.name}
               </h1>
+              <div className="text-center">
+                {renderRating(selectedRestaurant.restaurant)}
+              </div>
               <div className="mt-3">
                 <Reviews reviews={selectedRestaurant.reviews} />
               </div>
+
               <AddReview />
             </>
           )}

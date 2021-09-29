@@ -9,8 +9,7 @@ const AddReview = () => {
   const [detail, setDetail] = useState('');
   const [rating, setRating] = useState(1);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
       await ReviewsApi.post(`/${id}`, {
         name,
@@ -77,7 +76,7 @@ const AddReview = () => {
           <div className="col-auto">
             <button
               type="submit"
-              onClick={(e) => handleSubmit(e)}
+              onClick={handleSubmit}
               className="btn btn-primary"
             >
               Add Review
